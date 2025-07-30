@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringbootMisterApplication<springboot-mister>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.delprado.springboot.mister.springboot_mister.SpringbootMisterApplication",
+            "projectName": "springboot-mister",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
