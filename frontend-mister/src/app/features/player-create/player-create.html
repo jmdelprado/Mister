@@ -1,0 +1,122 @@
+<div class="player-create-bg">
+  <div class="player-create-bg-filter"></div>
+  <img src="/assets/images/cesped.png" alt="Fondo" class="player-create-bg-img" />
+</div>
+
+<div class="player-create-container">
+  <div class="player-create-card">
+    <div class="player-create-header">
+      <h1 class="player-create-title">Crear Nuevo Jugador</h1>
+      <p class="player-create-subtitle">Completa la información del jugador</p>
+    </div>
+    
+    <form #playerForm="ngForm" (ngSubmit)="onSubmit(playerForm)" class="player-create-form">
+      
+      <div class="form-field">
+        <label for="name">Nombre</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          [(ngModel)]="player.name"
+          required
+          placeholder="Ingresa el nombre del jugador"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="lastname">Apellido</label>
+        <input
+          id="lastname"
+          name="lastname"
+          type="text"
+          [(ngModel)]="player.lastname"
+          required
+          placeholder="Ingresa el apellido del jugador"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="numberClau">Número de Cláusula</label>
+        <input
+          id="numberClau"
+          name="numberClau"
+          type="number"
+          [(ngModel)]="player.numberClau"
+          required
+          min="1"
+          placeholder="Ingresa el número de cláusula"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="date">Fecha</label>
+        <input
+          id="date"
+          name="date"
+          type="date"
+          [(ngModel)]="player.date"
+          required
+          class="form-input"
+        />
+      </div>
+
+      <div class="file-upload-container">
+        <label for="image" class="file-upload-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+          </svg>
+          Seleccionar Imagen
+        </label>
+        <input
+          id="image"
+          type="file"
+          (change)="onImageSelected($event)"
+          accept="image/*"
+          class="file-input"
+        />
+        <div *ngIf="selectedFile" class="file-info">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+          <span>{{ selectedFile.name }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="player.image && selectedFile" class="image-preview">
+        <img [src]="player.image" alt="Vista previa" />
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn btn-secondary"
+          (click)="onCancel()"
+          [disabled]="isLoading"
+        >
+          Cancelar
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="!playerForm.valid || !selectedFile || isLoading"
+        >
+          <svg *ngIf="isLoading" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="spinner">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+          </svg>
+          <span>{{ isLoading ? 'Creando...' : 'Crear Jugador' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

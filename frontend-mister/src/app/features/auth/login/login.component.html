@@ -1,0 +1,28 @@
+<div class="login-bg">
+  <div class="login-bg-filter"></div>
+  <img src="/assets/images/personaje.png" alt="Personaje" class="login-bg-img" />
+</div>
+<div class="login-form-container">
+
+  <div class="welcome-card">
+    <h2>¡Bienvenido a Mister!</h2>
+    <p>Inicia sesión para acceder a todas las funcionalidades y comenzar tu experiencia.</p>
+  </div>
+
+  <form (ngSubmit)="login()" autocomplete="off" class="login-form">
+    <h1 class="login-title">Iniciar Sesión</h1>
+    <div class="login-input-group">
+      <input type="text" [(ngModel)]="username" name="username" placeholder="Usuario" required class="login-input" />
+    </div>
+    <div class="login-input-group">
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña" required class="login-input" />
+    </div>
+    <button type="submit" class="login-btn">Entrar</button>
+    <div *ngIf="error" class="login-error">{{ error }}</div>
+    <div class="login-links">
+      <a href="#">¿Olvidaste tu contraseña?</a>
+      <span>|</span>
+      <a routerLink="/register">Crear cuenta</a>
+    </div>
+  </form>
+</div>
