@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PlayerCreate } from '../player-create/player-create';
+import { BlockLike } from 'typescript';
 
 @Component({
   selector: 'app-dashboard.component',
@@ -23,6 +24,7 @@ export class DashboardComponent {
   searchTerm: string = '';
   errorMessage: string = '';
   isLoading = false;
+  isAdmin = JSON.parse(localStorage.getItem('isAdmin') || 'false');
 
   constructor(private playerService: PlayerService, private dialog: MatDialog) {}
 
@@ -89,5 +91,33 @@ export class DashboardComponent {
   clearSearch() {
     this.searchTerm = '';
     this.loadPlayers();
+  }
+
+  deletePlayer(id:number){
+    if(confirm('Seguro que quieres borrar el jugador')){
+      this.playerService.deletePlayer(id).subscribe({
+        next: ()=>{ 
+          this.players = this.players.filter(p=> p.id !== id);
+          alert('Jugador borrado con exito')
+      },
+      error:()=> {
+        alert('Error al borrar el jugador')
+      }
+      })
+    }
+  }
+  increaseNumbClau(player:Player){
+    if(confirm('Seguro que quieres aumentar el número de clausulazos de este jugador')){
+      player.numberClau= player.numberClau+1;
+      this.playerService.updatePlayer(player.id,player).subscribe({
+        next: ()=>{
+          this.loadPlayers();
+          alert('El nùmero de clausulazos del jugador ha aumentado')
+        },
+        error: () => {
+          alert('Error aumentando el número de clausulazos del jugador')
+        }
+      })
+    }
   }
 }

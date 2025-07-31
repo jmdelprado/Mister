@@ -36,6 +36,12 @@
   color: #f0f0f0;
 }
 
+/* === Contenedor de Botones === */
+.container-button{
+  display: flex;
+  justify-content: space-between;
+}
+
 /* === Card principal === */
 .dashboard-card {
   background: #2c2c2c;
@@ -158,6 +164,9 @@
   background: #555;
   color: #999;
   cursor: not-allowed;
+}
+.btn-update{
+  float: right;
 }
 
 /* === Estados de carga y error === */
