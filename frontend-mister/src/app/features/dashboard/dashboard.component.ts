@@ -7,13 +7,17 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PlayerCreate } from '../player-create/player-create';
 import { BlockLike } from 'typescript';
+import { Alert } from '../../shared/alert/alert';
+import { Confirm } from '../../shared/confirm/confirm';
 
 @Component({
   selector: 'app-dashboard.component',
   imports: [
     CommonModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    Alert,
+    Confirm
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -25,6 +29,12 @@ export class DashboardComponent {
   errorMessage: string = '';
   isLoading = false;
   isAdmin = JSON.parse(localStorage.getItem('isAdmin') || 'false');
+  alertMessage: string = '';
+  showAlert: boolean = false;
+  showConfirm: boolean= false;
+  confirmMessage: string = '';
+  confirmCallback: (() => void ) | null = null;
+  
 
   constructor(private playerService: PlayerService, private dialog: MatDialog) {}
 
@@ -94,30 +104,59 @@ export class DashboardComponent {
   }
 
   deletePlayer(id:number){
-    if(confirm('Seguro que quieres borrar el jugador')){
+    this.askConfirmation('¿Seguro que quieres borrar el jugador?',()=>{
       this.playerService.deletePlayer(id).subscribe({
         next: ()=>{ 
           this.players = this.players.filter(p=> p.id !== id);
-          alert('Jugador borrado con exito')
+          this.showAlertFunction('Jugador borrado con exito')
       },
       error:()=> {
-        alert('Error al borrar el jugador')
+        this.showAlertFunction('Error al borrar el jugador')
       }
       })
-    }
+    })
   }
+
   increaseNumbClau(player:Player){
-    if(confirm('Seguro que quieres aumentar el número de clausulazos de este jugador')){
+    this.askConfirmation('¿Seguro que quieres aumentar el número de clausulazos de este jugador?',()=>{
       player.numberClau= player.numberClau+1;
       this.playerService.updatePlayer(player.id,player).subscribe({
         next: ()=>{
           this.loadPlayers();
-          alert('El nùmero de clausulazos del jugador ha aumentado')
+          this.showAlertFunction('El nùmero de clausulazos del jugador ha aumentado')
         },
         error: () => {
-          alert('Error aumentando el número de clausulazos del jugador')
+          this.showAlertFunction('Error aumentando el número de clausulazos del jugador')
         }
       })
+    })
+  }
+
+  showAlertFunction(message:string){
+    this.alertMessage=message;
+    this.showAlert = true;
+
+    setTimeout(()=>{
+      this.showAlert= false
+    },3000);
+  }
+
+  askConfirmation(message:string, callback: ()=> void){
+    this.confirmMessage = message;
+    this.showConfirm=true;
+    this.confirmCallback=callback
+  }
+
+  onConfirmResponse(result: boolean){
+    this.showConfirm = false;
+    if(result && this.confirmCallback){
+      this.confirmCallback();
     }
   }
+
+
+  handleImageError(event: Event) {
+  const img = event.target as HTMLImageElement;
+  img.src = 'assets/images/default.webp';
+}
 }

@@ -102,9 +102,9 @@
         </div>
         <div class="player-image">
           <img 
-            [src]="player.image ? 'data:image/jpeg;base64,' + player.image : 'assets/images/personaje.png'" 
+            [src]="player.image ? 'data:image/jpeg;base64,' + player.image : 'assets/images/default.webp'" 
             [alt]="player.name + ' ' + player.lastname"
-            (error)="$event.target.src = 'assets/images/personaje.png'"
+            (error)="handleImageError($event)"
           />
         </div>
         <div class="player-info">
@@ -126,3 +126,10 @@
     </div>
   </div>
 </div>
+
+<app-confirm 
+  *ngIf="showConfirm"
+  [message]="confirmMessage"
+  (confirmed)="onConfirmResponse($event)">
+</app-confirm>
+<app-alert *ngIf="showAlert" [message]="alertMessage"></app-alert>

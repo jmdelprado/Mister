@@ -1,0 +1,57 @@
+.confirm-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1e1e1e;
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  border: 1px solid #555;
+  text-align: center;
+  z-index: 1001;
+  width: 90vw;
+  max-width: 400px;
+  color: #4CAF50;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm {
+  background-color: #22c55e;
+  color: white;
+}
+
+.cancel {
+  background-color: #ef4444;
+  color: white;
+}
+
+.rolling-ball {
+  width: 50px;
+  height: 50px;
+  animation: roll 1s linear infinite;
+  display: block;
+  margin: 0 auto 1rem auto;
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg) translateX(0);
+  }
+  100% {
+    transform: rotate(360deg) translateX(0);
+  }
+}
