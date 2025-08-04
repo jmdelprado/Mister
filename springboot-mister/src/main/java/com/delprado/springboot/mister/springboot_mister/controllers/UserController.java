@@ -16,7 +16,7 @@ import com.delprado.springboot.mister.springboot_mister.entities.User;
 import com.delprado.springboot.mister.springboot_mister.services.UserService;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4200", "https://mister-ei6q.onrender.com" })
 @RequestMapping("/mister/users")
 public class UserController {
 

@@ -27,7 +27,7 @@ import com.delprado.springboot.mister.springboot_mister.entities.Player;
 import com.delprado.springboot.mister.springboot_mister.services.PlayerService;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "http://localhost:4200", "https://mister-ei6q.onrender.com" })
 @RequestMapping("/mister/players")
 public class PlayerController {
 
