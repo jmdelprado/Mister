@@ -1,19 +1,12 @@
-# Stage 1: Build con Maven
-FROM maven:3.9.3-eclipse-temurin-21 AS build
-
+# Build usando openjdk 21
+FROM openjdk:21 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY . .
+RUN ./mvnw clean package -DskipTests
 
-RUN mvn clean package -DskipTests
-
-# Stage 2: Ejecutar la app
-FROM eclipse-temurin:21-jdk-alpine
-
+# Ejecutar con openjdk 21 jre slim
+FROM openjdk:21-jdk-slim
 WORKDIR /app
-
 COPY --from=build /app/target/*.jar app.jar
-
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
