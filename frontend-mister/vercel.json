@@ -2,14 +2,21 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/frontend-mister/index.html",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist/frontend-mister"
+      }
     }
   ],
   "routes": [
     {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/dist/frontend-mister/index.html"
+      "dest": "/index.html"
     }
   ]
 }
